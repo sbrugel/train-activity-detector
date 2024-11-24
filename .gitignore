@@ -1,0 +1,8 @@
+# sample video data used for testing
+/data
+
+# heatmaps for testing
+/sns
+
+# output
+/out
