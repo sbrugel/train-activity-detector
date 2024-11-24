@@ -22,7 +22,7 @@ def get_stream_url(youtube_url):
         return info_dict["url"]
 
 def trains_detected(prev_frame, current_frame):
-    # reduce prev_frame to 25% size
+    # reduce frames to 25% size
     pframe = cv2.resize(prev_frame, (0, 0), fx=0.25, fy=0.25)
     cframe = cv2.resize(current_frame, (0, 0), fx=0.25, fy=0.25)
 
@@ -45,7 +45,7 @@ def trains_detected(prev_frame, current_frame):
 
     # set title of the plot
     axs[0].set_title('Color Change Magnitude')
-    axs[1].set_title('Current Frame - TRAIN DETECTED' if np.mean(change_mask) > DETECTION_THRESHOLD else 'Current Frame')
+    axs[1].set_title('Frame')
     
     file_name = None
     if np.mean(change_mask) > DETECTION_THRESHOLD:
@@ -80,13 +80,12 @@ if __name__ == "__main__":
                 subprocess.run(shlex.split('rm ./out/frame' + str(i - 1) + '.jpg'))
 
                 if len(imgs_to_gif) > 0:
-                    # create a gif of all images in the 'sns' folder, comparing the current frame against the heatmap of color change magnitude vs the previous frame
+                    # create a gif of all images in the 'sns' folder, comparing the current frame against the heatmap of 
+                    # color change magnitude vs the previous frame
                     with imageio.get_writer('./sns_' + str(time.time()) + '.gif', mode='I', loop=0, duration=1) as writer:
                         for filename in imgs_to_gif:
                             image = imageio.imread(filename)
                             writer.append_data(image)
-
-                    print('gif created')
 
                     # delete all the images in the folder
                     subprocess.run(shlex.split('rm ./sns/*.png'))
@@ -97,5 +96,5 @@ if __name__ == "__main__":
 
         prev_frame = current_frame
 
-        # wait for 1 second
+        # wait to get the next preview
         time.sleep(5)

@@ -4,7 +4,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 THRESHOLD = 100
-FPS = 60
 
 def detect_trains():
     print('loading video...')
