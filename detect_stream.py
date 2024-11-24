@@ -1,16 +1,22 @@
 import cv2
+import imageio
+import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-import matplotlib.pyplot as plt
-
-import imageio
-import time
-import subprocess
 import shlex
+import subprocess
+import sys
+import time
 import yt_dlp
 
+# cli arguments
+if len(sys.argv) != 3:
+    print("Usage: python detect_stream.py <stream url> <threshold, from 0 to 1>")
+    sys.exit(1)
+    
 CHANGE_THRESHOLD = 100
-DETECTION_THRESHOLD = 0.02
+youtube_url = sys.argv[1]
+DETECTION_THRESHOLD = float(sys.argv[2])
 
 prev_frame = None
 current_frame = None
@@ -57,7 +63,7 @@ def trains_detected(prev_frame, current_frame):
     return (np.mean(change_mask) > DETECTION_THRESHOLD, file_name)
 
 if __name__ == "__main__":
-    youtube_url = "https://www.youtube.com/live/Y28qU7UsFko?si=ykoRwgKPjGkGoBU6"  # Replace with the actual YouTube URL
+    youtube_url = "https://www.youtube.com/watch?v=23tmCNeFh7A"  # Replace with the actual YouTube URL
     stream_url = get_stream_url(youtube_url)
     print("Stream URL fetched.", stream_url)
 
@@ -97,4 +103,4 @@ if __name__ == "__main__":
         prev_frame = current_frame
 
         # wait to get the next preview
-        time.sleep(5)
+        time.sleep(4)

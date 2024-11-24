@@ -16,13 +16,13 @@ Make sure to run `pip install -r requirements.txt` before doing anything else!
 
 Create three folders: `data`, `out`, `sns`
 
-Run `python detect_stream.py` continuously in a terminal
+Run `python detect_stream.py <stream url> <threshold between 0 and 1>` continuously in a terminal
 
 That's it!
 
 ## Notes
 
-This has been tested only on Windows.
+This has been tested on Windows and Linux.
 
 While this will capture almost all train activity, sometimes the program may capture non-train related activity (likely due to lighting changes or excessive unrelated activity such as moving cars) but this happens infrequently.
 
