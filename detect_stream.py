@@ -78,29 +78,32 @@ if __name__ == "__main__":
         # obtain current_frame from frame.jpg
         current_frame = cv2.imread('./out/frame' + str(i) + '.jpg')
 
-        if prev_frame is not None:
-            detected, heatmap_file = trains_detected(prev_frame, current_frame)
-            
-            if not detected:
-                # delete the oldest picture in the folder
-                subprocess.run(shlex.split('rm ./out/frame' + str(i - 1) + '.jpg'))
+        try:
+            if prev_frame is not None:
+                detected, heatmap_file = trains_detected(prev_frame, current_frame)
+                
+                if not detected:
+                    # delete the oldest picture in the folder
+                    subprocess.run(shlex.split('rm ./out/frame' + str(i - 1) + '.jpg'))
 
-                if len(imgs_to_gif) > 0:
-                    # create a gif of all images in the 'sns' folder, comparing the current frame against the heatmap of 
-                    # color change magnitude vs the previous frame
-                    with imageio.get_writer('./sns_' + str(time.time()) + '.gif', mode='I', loop=0, duration=1) as writer:
-                        for filename in imgs_to_gif:
-                            image = imageio.imread(filename)
-                            writer.append_data(image)
+                    if len(imgs_to_gif) > 0:
+                        # create a gif of all images in the 'sns' folder, comparing the current frame against the heatmap of 
+                        # color change magnitude vs the previous frame
+                        with imageio.get_writer('./sns_' + str(time.time()) + '.gif', mode='I', loop=0, duration=1) as writer:
+                            for filename in imgs_to_gif:
+                                image = imageio.imread(filename)
+                                writer.append_data(image)
 
-                    # delete all the images in the folder
-                    subprocess.run(shlex.split('rm ./sns/*.png'))
+                        # delete all the images in the folder
+                        subprocess.run(shlex.split('rm ./sns/*.png'))
 
-                    imgs_to_gif = []
-            else:
-                imgs_to_gif.append(heatmap_file)
+                        imgs_to_gif = []
+                else:
+                    imgs_to_gif.append(heatmap_file)
 
-        prev_frame = current_frame
+            prev_frame = current_frame
+        except Exception as e:
+            print(e)
 
         # wait to get the next preview
         time.sleep(4)
