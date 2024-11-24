@@ -63,7 +63,6 @@ def trains_detected(prev_frame, current_frame):
     return (np.mean(change_mask) > DETECTION_THRESHOLD, file_name)
 
 if __name__ == "__main__":
-    youtube_url = "https://www.youtube.com/watch?v=23tmCNeFh7A"  # Replace with the actual YouTube URL
     stream_url = get_stream_url(youtube_url)
     print("Stream URL fetched.", stream_url)
 
