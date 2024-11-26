@@ -38,7 +38,7 @@ def download_stream(url):
         pass # Windows is dumb and a CTRL_C_EVENT kills the parent instead regardless, this prevents that from happening
 
 def process_saved_video(video_file):
-    subprocess.run(['python', 'detect_stream.py', 'live-' + time.time() + '.mp4', THRESHOLD])
+    subprocess.run(['python', 'detect_stream.py', video_file, THRESHOLD])
     print('processing complete')
 
 if __name__ == '__main__':

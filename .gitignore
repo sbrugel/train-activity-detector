@@ -10,3 +10,6 @@
 # video outputs
 *.mp4
 *.part
+
+# virtual environment
+/venv

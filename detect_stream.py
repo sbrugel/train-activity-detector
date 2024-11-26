@@ -23,7 +23,7 @@ current_frame = None
 
 if __name__ == "__main__":
     print('loading video...')
-    cap = cv2.VideoCapture('./data/live.mp4')
+    cap = cv2.VideoCapture(vid_name)
     print('video loaded')
     ret, prev_frame = cap.read() # read in the first frame
 
