@@ -7,7 +7,7 @@ THRESHOLD = 100
 
 def detect_trains():
     print('loading video...')
-    cap = cv2.VideoCapture('./data/train3.mp4')
+    cap = cv2.VideoCapture('./data/live.mp4')
     print('video loaded')
     ret, prev_frame = cap.read() # read in the first frame
 
@@ -15,16 +15,14 @@ def detect_trains():
     prev_frame = cv2.resize(prev_frame, (0, 0), fx=0.25, fy=0.25)
 
     frame_count = 0
-    for i in range(frame_count):
-        ret, frame = cap.read()
     while cap.isOpened():
-        frame_count += 300
-        for i in range(300):
-            ret, frame = cap.read()
-        frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+        ret, frame = cap.read()
         if not ret:
+            cap.release()
             break 
 
+        frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+        
         diff = cv2.absdiff(prev_frame, frame) # calculate the difference between the previous frame and the current frame
         change_magnitude = np.sum(diff, axis=2) # sum the differences across the color channels to create a single channel diff matrix
         change_mask = (change_magnitude > THRESHOLD).astype(np.uint8) # threshold the diff matrix to create a binary mask
@@ -56,6 +54,9 @@ def detect_trains():
         print('percentage of pixels that changed:', np.mean(change_mask) * 100, '%')
 
         prev_frame = frame
+
+        frame_count += 150 # i.e. at 30 fps, this advances one second
+        cap.set(cv2.CAP_PROP_POS_FRAMES, frame_count)
 
         # print(prev_gray)
         # print('====')

@@ -72,7 +72,9 @@ if __name__ == "__main__":
     while True:
         i += 1
         full_cmd = 'ffmpeg -y -i ' + stream_url + ' -frames:v 1 -q:v 2 ./out/frame' + str(i) + '.jpg'
+        print('running subprocess')
         subprocess.run(shlex.split(full_cmd))
+        print('done subprocess')
 
         # obtain current_frame from frame.jpg
         current_frame = cv2.imread('./out/frame' + str(i) + '.jpg')
