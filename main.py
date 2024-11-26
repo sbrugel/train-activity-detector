@@ -22,8 +22,8 @@ def download_stream(url):
         command = ['yt-dlp', url, '-o', output_name]
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-        # sleep for 1 minute
-        for i in range(60):
+        # sleep for the duration of the vid we want to save
+        for i in range(60*30):
             print(i)
             time.sleep(1)
 
@@ -38,7 +38,8 @@ def download_stream(url):
         pass # Windows is dumb and a CTRL_C_EVENT kills the parent instead regardless, this prevents that from happening
 
 def process_saved_video(video_file):
-    subprocess.run(['python', 'detect_stream.py', video_file, THRESHOLD])
+    time.sleep(5) # wait for vid to fully save
+    subprocess.run(['python', 'detect_stream.py', str(video_file), str(THRESHOLD)])
     print('processing complete')
 
 if __name__ == '__main__':

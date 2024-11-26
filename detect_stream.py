@@ -77,7 +77,7 @@ if __name__ == "__main__":
         else:
             if frame_start is not None:
                 frame_end = frame_count
-                print('Train activity from frame', frame_start, 'to frame', frame_end)
+                print('Train activity from (include)', frame_start, 'to (exclude)', frame_end)
                 frame_start = None
                 frame_end = None
 
